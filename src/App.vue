@@ -7,14 +7,16 @@
     <div>
       <ul role="list" class="divide-y divide-gray-500 divide-opacity-50">
         <li v-for="notification in notifications" :key="notification.id" class="flex justify-between p-5">
-          <div class="flex flex-col gap-x-4 w-1/2 mx-auto">
+          <div class="flex flex-col gap-x-4 w-1/2 mx-auto cursor-pointer" @click="handleCreateToDo(notification)">
             <div class="flex items-center">
-              <span v-if="notification.read === false" class="inline-block h-1.5 w-1.5 bg-gray-300 rounded-full mr-2"></span>
+              <span v-if="notification.read === false"
+                    class="inline-block h-1.5 w-1.5 bg-gray-300 rounded-full mr-2"></span>
               <avatar :name="notification.author" :border="false"></avatar>
               <div class="flex-auto ml-2">
                 <p class="text-sm font-semibold leading-6 text-white">{{ notification.title }}</p>
                 <div class="col-span-2">
                   <p class="mt-1 text-xs leading-5 text-white">{{ notification.preview_text }}</p>
+                  <p class="mt-1 text-xs leading-5 text-white">{{ notification.available_actions }}</p>
                 </div>
                 <div class="col-span-2">
                   <p class="mt-1 text-xs leading-5 text-[#FFFFFF99]">
@@ -56,12 +58,29 @@ import Avatar from "vue3-avatar";
 export default {
   name: "Notifications",
   components: {
-    Avatar
+    Avatar,
   },
   data() {
     return {
       notifications: []
     };
+  },
+  methods: {
+
+    async handleCreateToDo(notification) {
+      if (notification.available_actions.includes("CREATE_TODO")) {
+        try {
+          let submission = await axios.post("https://testau.asknice.ly/api/v1/candidate-test/mock-action", {
+            id: notification.id,
+            action: "TODO"
+          });
+          console.log(submission.data);
+        } catch (error) {
+          alert('Error submitting data')
+          console.error("Error submitting data:", error);
+        }
+      }
+    }
   },
 
   async mounted() {
@@ -69,6 +88,7 @@ export default {
       let response = await axios.get("https://testau.asknice.ly/api/v1/candidate-test/mock-notifications");
       this.notifications = response.data.data;
     } catch (error) {
+      alert('Error fetching data')
       console.error("Error fetching data:", error);
     }
   }
