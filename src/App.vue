@@ -2,30 +2,31 @@
 
   <div>
 
-    <header class="border-b-2 border-white border-opacity-50 py-5 sticky top-0 bg-red-300 z-50">
+    <header class="border-b-2 border-white border-opacity-50 py-5 sticky top-0 bg-ask-nicely-header-purple z-50">
       <h2 class="text-xl font-semibold text-white text-center">Notifications</h2>
     </header>
 
-    <div class="bg-gradient-to-b from-[#6b097a] to-[#274bdb] min-h-screen flex flex-col">
+    <div class="bg-gradient-to-b from-ask-nicely-purple to-ask-nicely-blue min-h-screen flex flex-col">
 
 
       <div>
         <ul role="list" class="divide-y divide-gray-500 divide-opacity-50">
-          <li v-for="notification in notifications" :key="notification.id" class="flex justify-between p-5">
-            <div class="flex flex-col gap-x-4 w-full md:w-1/2 mx-auto cursor-pointer"
+          <li v-for="notification in notifications" :key="notification.id" class="flex justify-between p-4 md:p-5">
+            <div class="flex flex-col gap-x-4 w-full md:w-3/4 mx-auto cursor-pointer"
                  @click="handleCreateToDo(notification)">
-              <div class="flex items-center">
+              <div class="flex items-center relative">
              <span v-if="notification.read === false"
-                   class="inline-block flex-shrink-0 h-1 w-1 bg-gray-300 rounded-full mr-2"></span>
+                   class="absolute top-1/2 -translate-y-1/2 left-[-10px] flex-shrink-0 h-1 w-1 bg-gray-300 rounded-full"></span>
                 <avatar :name="notification.author" :border="false"></avatar>
                 <div class="flex-auto ml-2">
-                  <p class="text-sm font-semibold leading-6 text-white">{{ notification.title }}</p>
+                  <p class="text-xs md:text-sm font-semibold leading-6 text-white">{{ notification.title }}</p>
                   <div class="col-span-2">
                     <p class="mt-1 text-xs leading-5 text-white">{{ notification.preview_text }}</p>
+<!--                    to easily check which notifications available_actions include  CREATE_TODO -->
                     <p class="mt-1 text-xs leading-5 text-white">{{ notification.available_actions }}</p>
                   </div>
                   <div class="col-span-2">
-                    <p class="mt-1 text-xs leading-5 text-[#FFFFFF99]">
+                    <p class="mt-1 text-xs leading-5 text-ask-nicely-light-gray">
                       {{ notification.author }}
                       <span class="float-right">{{ notification.created }}</span>
                     </p>
@@ -38,17 +39,17 @@
       </div>
 
     </div>
-    <footer class="bg-[#2f384c] sticky bottom-0">
-      <div class="w-1/2 mx-auto p-3">
-        <ul class="flex flex-wrap items-center justify-between text-sm font-medium text-gray-400">
+    <footer class="bg-ask-nicely-gray-dark sticky bottom-0">
+      <div class="md:w-1/2 mx-auto p-3">
+        <ul class="flex flex-wrap items-center justify-between text-sm font-medium text-white">
           <li>
-            <a href="#" class="hover:text-white">Home</a>
+            <a href="#">Home</a>
           </li>
           <li>
-            <a href="#" class="text-white">Notifications</a>
+            <a href="#" class="text-ask-nicely-light-gray">Notifications</a>
           </li>
           <li>
-            <a href="#" class="hover:text-white">Logout</a>
+            <a href="#">Logout</a>
           </li>
         </ul>
       </div>
@@ -87,7 +88,7 @@ export default {
           console.error("Error submitting data:", error);
         }
       }
-    }
+    },
   },
 
   async mounted() {
@@ -98,7 +99,8 @@ export default {
       alert('Error fetching data')
       console.error("Error fetching data:", error);
     }
-  }
+  },
+
 
 };
 </script>
