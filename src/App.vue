@@ -22,8 +22,6 @@
                   <p class="text-xs md:text-sm font-semibold leading-6 text-white">{{ notification.title }}</p>
                   <div class="col-span-2">
                     <p class="mt-1 text-xs leading-5 text-white">{{ notification.preview_text }}</p>
-                    <!--                    to easily check which notifications available_actions include  CREATE_TODO -->
-                    <p class="mt-1 text-xs leading-5 text-white">{{ notification.available_actions }}</p>
                   </div>
                   <div class="col-span-2">
                     <p class="mt-1 text-xs leading-5 text-ask-nicely-light-gray">
